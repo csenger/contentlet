@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 version = "0.1.1"
 long_description = open("README.rst").read() + "\n" + open("CHANGES.rst").read()
-description = "Framework for reusable and composable UI with repoze.bfg."
+description = "Framework for reusable and composable UI with pyramid"
 requires = []
 
 

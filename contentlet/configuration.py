@@ -12,7 +12,7 @@ __all__ = ["Configurator",
 
 
 class ContentletConfiguratorMixin(object):
-    """ Mixin for using with repoze.bfg.configuration.Configurator."""
+    """ Mixin for using with pyramid.configuration.Configurator."""
 
     def add_content_provider(self, provider, name, context=None):
         """ Add content provider."""
