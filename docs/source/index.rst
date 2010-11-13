@@ -9,8 +9,9 @@ Contentlet — UI framework for web
 Contentlet is a framework for creating composable and reusable UI for web. It
 is designed by looking at `zope.contentprovider
 <http://pypi.python.org/pypi/zope.contentprovider>`_ and `zope.viewlet
-<http://pypi.python.org/pypi/zope.viewlet>`_ and for using with `repoze.bfg
-<http://bfg.repoze.org>`_ web framework.
+<http://pypi.python.org/pypi/zope.viewlet>`_ and for using with `Pyramid
+<http://docs.pylonshq.com/>`_ web framework (formerly known as 
+`repoze.bfg` <http://bfg.repoze.org>).
 
 .. toctree::
    :maxdepth: 2
@@ -43,7 +44,7 @@ or any callable object, for example::
         def __call__(self, context, request):
             return "A piece of UI."
 
-Content providers look like a simple views (in MTV frameworks, like repoze.bfg)
+Content providers look like a simple views (in MTV frameworks, like Pyramid)
 and they are even can be registered as views and vice-versa. So content
 provider can be rendered as separate page and can be embedded in another page.
 
@@ -78,29 +79,29 @@ or if you want to register content provider for specific context::
     ...
 
 But where ``you_application_registry`` comes from? Often it is registry, that
-was created by ``repoze.bfg.configuration.Configurator`` object, so the more
+was created by ``pyramid.configuration.Configurator`` object, so the more
 full piece of configuration code looks like this::
 
 
     ...
-    import repoze.bfg
+    import pyramid
     import contentlet
 
-    bfg_config = repoze.bfg.configuration.Configurator()
-    bfg_config.add_view(my_view)
-    config = contentlet.Configurator(registry=bfg_config.registry)
+    pyramid_config = pyramid.configuration.Configurator()
+    pyramid_config.add_view(my_view)
+    config = contentlet.Configurator(registry=pyramid_config.registry)
     config.add_content_provider(my_contentprovider, "name", context=MyContext)
     ...
 
-We need to create two objects for configuring our application (BFG and
+We need to create two objects for configuring our application (Pyramid and
 contentlet configurators), sometimes it is better to cook own configurator.
 There is ``ContentletConfiguratorMixin`` comes to mind::
 
     ...
-    from repoze.bfg.configuration import Configurator as BFGConfigurator
+    from pyramid.configuration import Configurator as PyramidConfigurator
     from contentlet import ContentletConfiguratorMixin
 
-    class Configurator(BFGConfigurator, ContentletConfiguratorMixin):
+    class Configurator(PyramidConfigurator, ContentletConfiguratorMixin):
         pass
 
     config = Configurator()
@@ -108,7 +109,7 @@ There is ``ContentletConfiguratorMixin`` comes to mind::
     config.add_content_provider(my_contentprovider, "name", context=MyContext)
     ...
 
-So our custom ``Configurator`` object now suitable to configure both BFG and
+So our custom ``Configurator`` object now suitable to configure both Pyramid and
 contentlet aspects of application configuration.
 
 Declarative configuration
@@ -173,9 +174,9 @@ You can also query provider that is specific to context::
 
 By default, ``contentlet.query_provider`` and ``contentlet.get_provider`` will
 use global ZCA registry for lookups. This is not desired behaviour while using
-repoze.bfg web-framework, cause it uses per-application registry. View code can
+Pyramid web-framework, cause it uses per-application registry. View code can
 get it via request's ``registry`` attribiute, so querying content providers in
-repoze.bfg's view usually done in following way::
+Pyramid's view usually done in following way::
 
     ...
     from contentlet import query_provider
@@ -190,7 +191,7 @@ Using content providers inside Chameleon templates
 --------------------------------------------------
 
 Usually it is better to use content providers from inside templates than from
-views. Repoze.bfg comes with `Chameleon <http://chameleon.repoze.org/>`_
+views. Pyramid comes with `Chameleon <http://chameleon.repoze.org/>`_
 templating engine and Contentlet provides custom TALES expression translator
 for rendering content providers::
 
@@ -200,6 +201,6 @@ This ``div`` element will be replace with piece of markup, returned by content
 provider with name ``name``.
 
 .. warning::
-    Temlate should have access for repoze.bfg request object via `request`
+    Temlate should have access for Pyramid request object via `request`
     variable. It can be done via passing current request from views or using
     renderers, which automatically do that.
