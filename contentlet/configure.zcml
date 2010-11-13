@@ -10,7 +10,7 @@
     name="contentprovider"
     />
 
-  <meta:directives>
+  <meta:directives namespace="http://pylonshq.com/pyramid">
 
     <meta:directive
       name="contentprovider"
