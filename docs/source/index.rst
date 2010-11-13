@@ -60,6 +60,18 @@ Content providers can be registered by name and for specific request's context. 
 Imperative configuration
 ------------------------
 
+If you use Pyramid amd don't want to hook the global component registry with
+hook_zca(), you need to register ``contentlet.expression.ProviderExpression`` 
+as a utility in the global component registry::
+
+  from chameleon.zpt.interfaces import IExpressionTranslator
+  from contentlet.expression import ProviderExpression
+  from zope.component import provideUtility
+
+  provideUtility(ProviderExpression(), IExpressionTranslator,
+                 name='contentprovider')
+
+
 For configuring you application imperatively, you should use ``contentlet.Configurator`` object::
 
     ...
@@ -114,6 +126,11 @@ contentlet aspects of application configuration.
 
 Declarative configuration
 -------------------------
+
+If you use Contentlet in a Pyramid application and want to use 
+declarative configuration you have to call 
+``pyramid.configuartion.Contfigurator().hook_zca()``
+when you initialize your application.
 
 Declarative configuration can be made with ``contentprovider`` ZCML directive::
 
