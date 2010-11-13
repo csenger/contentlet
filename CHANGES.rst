@@ -1,6 +1,8 @@
 0.2
 ---
 
+* port from repoze.bfg to Pyramid
+
 * Added ``contentlet.provider.render_`` as shortcut for rendering providers.
 
 * Do not depend on repoze.bfg at all.
