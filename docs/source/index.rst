@@ -117,10 +117,11 @@ Declarative configuration
 
 Declarative configuration can be made with ``contentprovider`` ZCML directive::
 
-    <configure>
-        <include package="contentlet" />
+    <configure xmlns:contentlet="http://braintrace.ru/contentlet">
 
-        <contentprovider
+        <include package="contentlet" file="meta.zcml"/>
+
+        <contentlet:contentprovider
             provider="mypackage.myprovider"
             name="name"
             />
@@ -128,10 +129,11 @@ Declarative configuration can be made with ``contentprovider`` ZCML directive::
 
 or for registering content provider for specific context::
 
-    <configure>
-        <include package="contentlet" />
+    <configure xmlns:contentlet="http://braintrace.ru/contentlet">
 
-        <contentprovider
+        <include package="contentlet" file="meta.zcml"/>
+
+        <contentlet:contentprovider
             provider="mypackage.myprovider"
             name="name"
             context="mypackage.models.MyContext"

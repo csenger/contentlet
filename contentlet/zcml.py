@@ -27,7 +27,12 @@ class IContentProviderDirective(Interface):
 
 
 def contentprovider(_context, provider=None, name=None, context=None):
-    registry = getSiteManager()
+
+    try:
+        from pyramid.threadlocal import get_current_registry
+        registry = get_current_registry()
+    except ImportError:
+        registry = getSiteManager()
 
     def register():
         config = Configurator(registry)

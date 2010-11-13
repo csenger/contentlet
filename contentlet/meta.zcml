@@ -1,0 +1,14 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:meta="http://namespaces.zope.org/meta">
+
+  <meta:directives namespace="http://braintrace.ru/contentlet">
+
+      <meta:directive
+          name="contentprovider"
+          schema="contentlet.zcml.IContentProviderDirective"
+          handler="contentlet.zcml.contentprovider"
+          />
+
+    </meta:directives>
+
+</configure>

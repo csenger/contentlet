@@ -13,12 +13,16 @@ __all__ = ["query_provider",
 def query_provider(name, context=None, registry=None):
     """ Query content provider by `name` or by `name` and `context`.
 
-    By default, for lookup global registry will be used, but you can
-    provide your own registry you want to lookup from via `registry` keyword
-    argument.
+    If pyramid is available, the current registry is use. Otherwise we
+    lookup global registry. But you can provide your own registry you
+    want to lookup from via `registry` keyword argument.
     """
     if registry is None:
-        registry = getSiteManager()
+        try:
+            from pyramid.threadlocal import get_current_registry
+            registry = get_current_registry()
+        except ImportError:
+            registry = getSiteManager()
     provider = registry.adapters.lookup(
          (providedBy(context),), IContentProvider, name=name, default=None)
     return provider

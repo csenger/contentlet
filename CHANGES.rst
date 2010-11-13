@@ -1,6 +1,14 @@
 0.2
 ---
 
+* contentprovider zcml directive: Put the directive into it's the own 
+  namespace "http://braintrace.ru/contentlet" and move the registration
+  from configure.zcml to meta.zcml.
+
+* Change component registrations and lookups to make declerative 
+  configuration work with Pyramid without the need to use hook_zca()
+  or share the global registry.
+
 * port from repoze.bfg to Pyramid
 
 * Added ``contentlet.provider.render_`` as shortcut for rendering providers.

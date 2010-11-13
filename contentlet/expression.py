@@ -2,8 +2,10 @@
 
 from chameleon.core import types
 from chameleon.zpt import expressions
-
+from chameleon.zpt.interfaces import IExpressionTranslator
 from contentlet.provider import query_provider
+
+from zope.component import provideUtility
 
 __all__ = ["ProviderExpression"]
 
@@ -34,3 +36,7 @@ class ProviderExpression(expressions.ExpressionTranslator):
         value = types.value("%s(request, '%s')" % (self.symbol, string))
         value.symbol_mapping[self.symbol] = render_contentprovider
         return value
+
+provider_translator = ProviderExpression()
+provideUtility(provider_translator, IExpressionTranslator,
+               name='contentprovider')
